@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>水木社区租房</title>
+    <style>
+      table {
+        margin: 10px auto;
+        border-collapse: collapse;
+        border: 2px solid rgb(140 140 140);
+        font-family: sans-serif;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+      }
+      thead,
+      tfoot {
+        background-color: rgb(228 240 245);
+      }
+
+      th,
+      td {
+        border: 1px solid rgb(160 160 160);
+        padding: 8px 10px;
+      }
+
+      td:last-of-type {
+        text-align: center;
+      }
+
+      tbody > tr:nth-of-type(even) {
+        background-color: rgb(237 238 242);
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">序号</th>
+          <th scope="col">标题</th>
+          <th scope="col">发贴时间</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{each list}}
+        <tr>
+          <td>{{ $index + 1 }}</td>
+          <td>
+            <a href="{{ $value.href }}" target="_blank">{{ $value.title }}</a>
+          </td>
+          <td>{{ $value.time }}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </body>
+</html>
