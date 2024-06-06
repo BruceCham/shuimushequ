@@ -35,8 +35,8 @@ const getShuiMuPage = async (count = 1) => {
 	const list = all.flat().sort((a, b) => {
 		let at = parseInt(a.time.replaceAll(/\D/g, ''));
 		let bt = parseInt(b.time.replaceAll(/\D/g, ''));
-		if (at < 1000000) at = 1000000000 - at;
-		if (bt < 1000000) bt = 1000000000 - bt;
+		if (at < 1000000) at = 1000000000 + at;
+		if (bt < 1000000) bt = 1000000000 + bt;
 		return bt - at;
 	});
 	const html = template(views, {
