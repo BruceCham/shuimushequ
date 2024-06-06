@@ -35,8 +35,8 @@ const getShuiMuPage = async (count = 1) => {
 	const list = all.flat().sort((a, b) => {
 		let at = parseInt(a.time.replaceAll(/\D/g, ''));
 		let bt = parseInt(b.time.replaceAll(/\D/g, ''));
-		if (at < 1000000) at = at * 1000;
-		if (bt < 1000000) bt = bt * 1000;
+		if (at < 1000000) at = at + 100000000;
+		if (bt < 1000000) bt = bt + 100000000;
 		return bt - at;
 	});
 	const html = template(views, {
@@ -45,4 +45,4 @@ const getShuiMuPage = async (count = 1) => {
 	fs.writeFileSync('水木社区.html', html)
 }
 
-getShuiMuPage(20);
+getShuiMuPage(30);
