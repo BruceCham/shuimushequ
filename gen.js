@@ -21,11 +21,16 @@ async function getHtml(page) {
 
 	const result = []
 	content.childNodes.forEach(node => {
-		result.push({
+		const info = {
 			title: node.childNodes[1].childNodes[0].innerText,
 			href: HOST + node.childNodes[1].childNodes[0].getAttribute('href'),
 			time: node.childNodes[2].innerText.replaceAll('&emsp;', '')
-		})
+		}
+		// 过滤部分无用数据
+		if (info.title.includes('求') || info.title.includes('版面积分变更记录') || info.title.includes('Re')) {
+			return;
+		}
+		result.push(info)
 	});
 	return result;
 }
@@ -45,4 +50,4 @@ const getShuiMuPage = async (count = 1) => {
 	fs.writeFileSync('水木社区.html', html)
 }
 
-getShuiMuPage(30);
+getShuiMuPage(40);
