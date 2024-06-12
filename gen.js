@@ -24,7 +24,8 @@ async function getHtml(page) {
 		const info = {
 			title: node.childNodes[1].childNodes[0].innerText,
 			href: HOST + node.childNodes[1].childNodes[0].getAttribute('href'),
-			time: node.childNodes[2].innerText.replaceAll('&emsp;', '')
+			time: node.childNodes[2].innerText.replaceAll('&emsp;', ''),
+			timeRe: node.childNodes[7].childNodes[0].innerText.replaceAll('&emsp;', ''),
 		}
 		// 过滤部分无用数据
 		if (info.title.includes('求') || info.title.includes('版面积分变更记录') || info.title.includes('Re')) {
@@ -39,10 +40,15 @@ const getShuiMuPage = async (count = 1) => {
 	const all = await Promise.all(new Array(count).fill(1).map((_, index) => getHtml(index + 1)));
 	const list = all.flat().sort((a, b) => {
 		let at = parseInt(a.time.replaceAll(/\D/g, ''));
+		let atRe = parseInt(a.timeRe.replaceAll(/\D/g, ''));
 		let bt = parseInt(b.time.replaceAll(/\D/g, ''));
+		let btRe = parseInt(b.timeRe.replaceAll(/\D/g, ''));
 		if (at < 1000000) at = 1000000000 + at;
+		if (atRe < 1000000) atRe = 1000000000 + atRe;
 		if (bt < 1000000) bt = 1000000000 + bt;
-		return bt - at;
+		if (btRe < 1000000) btRe = 1000000000 + btRe;
+		// 发贴时间和回复时间综合对比
+		return bt + btRe - at - atRe;
 	});
 	const html = template(views, {
 		list
